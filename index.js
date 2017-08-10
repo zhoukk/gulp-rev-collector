@@ -37,7 +37,7 @@ function _getManifestData(file, opts) {
                     isRev = 0;
                     return;
                 }
-                let cleanReplacement =  path.basename(json[key]).replace(new RegExp( opts.revSuffix ), '' );
+                let cleanReplacement =  path.basename(json[key]).split('?')[0];
                 if (!~[
                         path.basename(key),
                         _mapExtnames(path.basename(key), opts)
@@ -160,7 +160,7 @@ function revCollector(opts) {
                     }
                     prefixDelim += '])';
                     changes.push({
-                        regexp: new RegExp( prefixDelim + pattern, 'g' ),
+                        regexp: new RegExp( prefixDelim + pattern +'(\\?v=\\w{10})?', 'g' ),
                         patternLength: pattern.length,
                         replacement: '$1' + manifest[key]
                     });
